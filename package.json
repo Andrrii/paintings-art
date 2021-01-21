@@ -1,12 +1,12 @@
 {
-  "name": "picture",
-  "version": "1.0.0",
-  "description": "",
+  "name": "paintings-art",
+  "version": "0.9.5",
+  "description": "my second frontEnd project",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "@butso4ka",
   "license": "ISC",
   "browserslist": [
     "> 1%",
@@ -23,5 +23,16 @@
     "gulp": "^4.0.2",
     "webpack": "^4.41.2",
     "webpack-stream": "^5.2.1"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Andrrii/paintings-art.git"
+  },
+  "keywords": [
+    "ART"
+  ],
+  "bugs": {
+    "url": "https://github.com/Andrrii/paintings-art/issues"
+  },
+  "homepage": "https://github.com/Andrrii/paintings-art#readme"
 }

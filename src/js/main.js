@@ -1,0 +1,21 @@
+import modals from "./modules/modals"
+import sliders from "./modules/slider"
+import forms from "./modules/forms"
+import mask from "./modules/mask"
+import checkTextInputs from "./modules/checkTextInputs"
+
+window.addEventListener('DOMContentLoaded',() => {
+"use strict"
+
+modals()
+forms()
+mask("[name='phone']")
+
+sliders('.feedback-slider-item','horizontal','.main-prev-btn','.main-next-btn')
+
+sliders('.main-slider-item','vertical')
+
+checkTextInputs('[name="name"]')
+checkTextInputs('[name="message"]')
+
+})

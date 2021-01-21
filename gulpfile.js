@@ -4,8 +4,8 @@ const gulp = require("gulp");
 const webpack = require("webpack-stream");
 const browsersync = require("browser-sync");
 
-const dist = "./dist/";
-
+//const dist = "./dist/";
+const dist = "D:/MAMP/htdocs/my_second_frontend_project"
 gulp.task("copy-html", () => {
     return gulp.src("./src/index.html")
                 .pipe(gulp.dest(dist))
@@ -92,4 +92,4 @@ gulp.task("build-prod-js", () => {
                 .pipe(gulp.dest(dist));
 });
 
-gulp.task("default", gulp.parallel("watch", "build"));
+gulp.task("default", gulp.parallel(/*"watch",*/ "build"));
