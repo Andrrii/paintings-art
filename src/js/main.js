@@ -9,13 +9,17 @@ import filter from "./modules/filter"
 import pictureSize from "./modules/pictureSize"
 import accordion from "./modules/accordion"
 import burger from "./modules/burger"
-
+import scrolling from "./modules/scrolling"
+import drop from "./modules/drop"
 
 window.addEventListener('DOMContentLoaded',() => {
 "use strict"
 
+
+scrolling(".pageup")
 modals()
 forms()
+drop()
 mask("[name='phone']")
 burger(".burger-menu",".burger")
 sliders('.feedback-slider-item','horizontal','.main-prev-btn','.main-next-btn')

@@ -4412,6 +4412,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_pictureSize__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./modules/pictureSize */ "./src/js/modules/pictureSize.js");
 /* harmony import */ var _modules_accordion__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./modules/accordion */ "./src/js/modules/accordion.js");
 /* harmony import */ var _modules_burger__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./modules/burger */ "./src/js/modules/burger.js");
+/* harmony import */ var _modules_scrolling__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./modules/scrolling */ "./src/js/modules/scrolling.js");
+/* harmony import */ var _modules_drop__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./modules/drop */ "./src/js/modules/drop.js");
+
+
 
 
 
@@ -4426,8 +4430,10 @@ __webpack_require__.r(__webpack_exports__);
 window.addEventListener('DOMContentLoaded', function () {
   "use strict";
 
+  Object(_modules_scrolling__WEBPACK_IMPORTED_MODULE_11__["default"])(".pageup");
   Object(_modules_modals__WEBPACK_IMPORTED_MODULE_0__["default"])();
   Object(_modules_forms__WEBPACK_IMPORTED_MODULE_2__["default"])();
+  Object(_modules_drop__WEBPACK_IMPORTED_MODULE_12__["default"])();
   Object(_modules_mask__WEBPACK_IMPORTED_MODULE_3__["default"])("[name='phone']");
   Object(_modules_burger__WEBPACK_IMPORTED_MODULE_10__["default"])(".burger-menu", ".burger");
   Object(_modules_slider__WEBPACK_IMPORTED_MODULE_1__["default"])('.feedback-slider-item', 'horizontal', '.main-prev-btn', '.main-next-btn');
@@ -4635,6 +4641,99 @@ var checkTextInputs = function checkTextInputs(selector) {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (checkTextInputs);
+
+/***/ }),
+
+/***/ "./src/js/modules/drop.js":
+/*!********************************!*\
+  !*** ./src/js/modules/drop.js ***!
+  \********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var core_js_modules_es_function_name__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/es.function.name */ "./node_modules/core-js/modules/es.function.name.js");
+/* harmony import */ var core_js_modules_es_function_name__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_function_name__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var core_js_modules_es_string_split__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! core-js/modules/es.string.split */ "./node_modules/core-js/modules/es.string.split.js");
+/* harmony import */ var core_js_modules_es_string_split__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_string_split__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! core-js/modules/web.dom-collections.for-each */ "./node_modules/core-js/modules/web.dom-collections.for-each.js");
+/* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_2__);
+
+
+
+
+var drop = function drop() {
+  // загрузчик файлов на чистом JavaScript
+  // drag *
+  // dragend *
+  // dragenter - объект над dropArea
+  // dragexit *
+  // dragleave - объект за пределами dropArea
+  // dragover - объект зависает над dropArea
+  // dragstart *
+  // drop - объект отправлен в dropArea
+  var fileInputs = document.querySelectorAll('[name="upload"]');
+  ['dragenter', 'dragleave', 'dragover', 'drop'].forEach(function (eventName) {
+    fileInputs.forEach(function (input) {
+      input.addEventListener(eventName, preventDefaults, false);
+    });
+  });
+
+  function preventDefaults(event) {
+    event.preventDefault();
+    event.stopPropagation();
+  }
+
+  function highlights(item)
+  /* Підсвічуєм |input| */
+  {
+    item.closest('.file_upload').style.border = "3px solid green";
+    item.closest('.file_upload').style.backgroundColor = "rgba(0,0,0, .4)";
+  }
+
+  function unhighlights(item)
+  /* забираєм підсвітку |input| */
+  {
+    item.closest('.file_upload').style.border = "none";
+
+    if (item.closest('.calc_form')) {
+      item.closest('.file_upload').style.backgroundColor = "#fff";
+    } else {
+      item.closest('.file_upload').style.backgroundColor = "#ededed";
+    }
+  }
+
+  ['dragenter', 'dragover'].forEach(function (eventName) {
+    fileInputs.forEach(function (input) {
+      input.addEventListener(eventName, function () {
+        return highlights(input);
+      }, false);
+    });
+  });
+  ['dragleave', 'drop'].forEach(function (eventName) {
+    fileInputs.forEach(function (input) {
+      input.addEventListener(eventName, function () {
+        return unhighlights(input);
+      }, false);
+    });
+  }); // Коли юзер закинув фото
+
+  fileInputs.forEach(function (input) {
+    input.addEventListener('drop', function (e) {
+      input.files = e.dataTransfer.files; // Передаєм значення в |input|
+
+      var dots; // Якщо ім'я картинки занадто довге то ставим |...+.png|
+
+      var arr = input.files[0].name.split('.');
+      arr[0].length > 6 ? dots = "... + ." : dots = ".";
+      var name = arr[0].substring(0, 6) + dots + arr[1];
+      input.previousElementSibling.textContent = name; // Попередній елемент
+    });
+  });
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (drop);
 
 /***/ }),
 
@@ -5117,6 +5216,118 @@ var pictureSize = function pictureSize(imageSelector) {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (pictureSize);
+
+/***/ }),
+
+/***/ "./src/js/modules/scrolling.js":
+/*!*************************************!*\
+  !*** ./src/js/modules/scrolling.js ***!
+  \*************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/web.dom-collections.for-each */ "./node_modules/core-js/modules/web.dom-collections.for-each.js");
+/* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _modals__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modals */ "./src/js/modules/modals.js");
+
+
+
+var scrolling = function scrolling(upSelector) {
+  var upElem = document.querySelector(upSelector);
+  window.addEventListener("scroll", function () {
+    if (document.documentElement.scrollTop > 1650)
+      /* якщо прогортали вниз на 1650 */
+      {
+        upElem.classList.add("animated", "fadeInUp");
+        upElem.classList.remove("fadeOut");
+      } else {
+      upElem.classList.add("fadeOut");
+      upElem.classList.remove("fadeInUp");
+    }
+  }); //#region  firt variant(simple)
+  // Плавний скролл наверх або в іншу позицію
+  // const element = document.documentElement,
+  //       body = document.body; /* for different browsers */
+  // const calcScroll = () => {
+  //     upElem.addEventListener("click",function(e){
+  //         let scrollTop = Math.round(body.scrollTop || element.scrollTop) // Скіль пролистали донизу
+  //         if(this.hash !== ""){
+  //         e.preventDefault()
+  //         let hashElement = document.querySelector(this.hash) // елемент до якого гортаємо
+  //         let hashElementTop = 0; // Скільки потрібно пролистати до батька цього елементу
+  //         while( hashElement.offsetParent){
+  //             hashElementTop += hashElementTop.offsetTop
+  //             hashElement = hashElement.offsetParent
+  //         } 
+  //         hashElementTop = Math.round(hashElementTop)
+  //         smoothScroll(scrollTop,hashElementTop,this.hash)
+  //     }
+  //     })
+  // };
+  // const smoothScroll = (from,to,hash) => {
+  //     let timeInterval = 1,
+  //         prevScrollTop,
+  //         speed;
+  //     if (to>from){speed = 30 /* Зверху вниз */}
+  //     else{speed = -30}
+  //     let move = setInterval(function(e){
+  //         let scrollTop = Math.round(body.scrollTop || element.scrollTop) // Скіль пролистали донизу
+  //         if (
+  //             prevScrollTop === scrollTop ||
+  //             (to > from && scrollTop >= to) ||
+  //             (to < from && scrollTop <= to)
+  //         ){
+  //             clearInterval(move)
+  //             history.replaceState   (history.state,document.title, location.href.replace(/#.*$/g,"")+hash)// Працюєм із адресною строкою
+  //         }
+  //         else{
+  //             body.scrollTop += speed 
+  //             element.scrollTop += speed
+  //             prevScrollTop = scrollTop
+  //         }
+  //     },timeInterval)
+  // };
+  // calcScroll()
+  //#endregion
+  //  second variant | scrolling with animationFrame
+
+  var links = document.querySelectorAll("[href^='#']"),
+      speed = 0.3;
+  links.forEach(function (link) {
+    link.addEventListener('click', function (e) {
+      e.preventDefault();
+      var widthTop = document.documentElement.scrollTop,
+          hash = this.hash,
+          toBlock = document.querySelector(hash).getBoundingClientRect().top,
+
+      /* Отримуєм верхню межу елементу */
+      start = null;
+      requestAnimationFrame(step);
+
+      function step(time) {
+        if (start === null) {
+          start = time;
+        }
+
+        var progress = time - start,
+            r = toBlock < 0 ? Math.max(widthTop - progress / speed, widthTop + toBlock) : Math.min(widthTop + progress / speed, widthTop + toBlock);
+        /* Вичисляєм наскільки рухатись і в яку сторону */
+
+        document.documentElement.scrollTo(0, r);
+
+        if (r != widthTop + toBlock) {
+          requestAnimationFrame(step);
+        } else {
+          location.hash = hash;
+        }
+      }
+    });
+  });
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (scrolling);
 
 /***/ }),
 
